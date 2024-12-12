@@ -1,0 +1,57 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/user-api/(.*)$",
+      "target": "$1",
+      "service": "sap-approuter-userapi"
+    },
+    {
+      "source": "^/service/scim/Users(.*)$",
+      "target": "/service/scim/Users/$1",
+      "destination": "srvSCIMIAS",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/api(.*)$",
+      "target": "/api/$1",
+      "destination": "srvProntosPagosNode",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/ZFI_PRONTO_PAGO_SRV(.*)$",
+      "target": "/ZFI_PRONTO_PAGO_SRV/$1",
+      "destination": "srvODataFacturas",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/solicitud.xsodata(.*)$",
+      "target": "/solicitud.xsodata/$1",
+      "destination": "srvhadPP",
+      "authenticationType": "xsuaa",
+      "csrfProtection": false
+    },
+    {
+      "source": "^/resources/(.*)$",
+      "target": "/resources/$1",
+      "authenticationType": "none",
+      "destination": "ui5"
+    },
+    {
+      "source": "^/test-resources/(.*)$",
+      "target": "/test-resources/$1",
+      "authenticationType": "none",
+      "destination": "ui5"
+    },
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

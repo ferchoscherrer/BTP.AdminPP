@@ -1,0 +1,572 @@
+<mvc:View
+    controllerName="cotemar.solicitudprontospagos.controller.SolicitudMaster"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+>
+    <f:DynamicPage
+        id="dynamicPageId"
+        showFooter='false'
+    >
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>master.tableTitle}" />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader>
+                <f:content>
+                    <fb:FilterBar
+                        id="filterbar"
+                        persistencyKey="PersKeyFilterBar"
+                        search=".onFilter"
+                        useToolbar="false"
+                        showGoOnFB="true"
+                        showFilterConfiguration="false"
+                    >
+                        <fb:filterItems>
+                            <fb:FilterItem
+                                name="A"
+                                visible="{appView>/filterBar/Sociedad}"
+                                label="{i18n>master.filterBar.society}"
+                                id="itemFilterSociety"
+                                mandatory="true"
+                            >
+                                <fb:control>
+                                    <ComboBox
+                                        id="societyCombo"
+                                        placeholder="{i18n>master.filterBar.society.placeholder}"
+                                        items="{path:'prontoPago>/MatchcodesSet', length : 4000, filters:[{ path: 'Campo', operator: 'EQ', value1: 'Sociedad' }]}"
+                                    >
+                                        <core:ListItem
+                                            id="listItemTemplateSociety"
+                                            key="{prontoPago>Valor}"
+                                            text="{= ${prontoPago>Valor}+' - '+${prontoPago>Descripcion}}"
+                                        />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterItem>
+                        </fb:filterItems>
+                        <fb:filterItems>
+                            <fb:FilterItem
+                                name="B"
+                                visible="{appView>/filterBar/Proveedor}"
+                                label="{i18n>master.filterBar.supplier}"
+                                id="itemFilterSupplier"
+                                mandatory="true"
+                            >
+                                <fb:control>
+                                    <!-- <ComboBox
+                                        id="supplierCombo"
+                                        placeholder="{i18n>master.filterBar.supplier.placeholder}"
+                                        items="{path:'prontoPago>/MatchcodesSet', length : 10000, filters:[{ path: 'Campo', operator: 'EQ', value1: 'Proveedor' }]}"
+                                    >
+                                        <core:ListItem
+                                            key="{prontoPago>Valor}"
+                                            text="{parts: ['prontoPago>Valor','prontoPago>Descripcion'],formatter: '.formatter.formatComboValue'}"
+                                        />
+                                    </ComboBox> -->
+
+                                    <Input
+                                        id="supplierInput"
+                                        placeholder="{i18n>master.filterBar.supplier.placeholder}"
+                                        showSuggestion="true"
+                                        showTableSuggestionValueHelp="false"
+                                        suggest="handleSuggest"
+                                        filterSuggests="false"
+                                    >
+                                        <suggestionColumns>
+                                            <Column>
+                                                <Label text="Valor" />
+                                            </Column>
+                                            <Column>
+                                                <Label text="Descripción" />
+                                            </Column>
+                                        </suggestionColumns>
+                                    </Input>
+                                    <!-- <suggestionColumns>
+                                            <Column>
+                                                <Label text="Valor" />
+                                            </Column>
+                                            <Column>
+                                                <Label text="Descripción" />
+                                            </Column>
+                                        </suggestionColumns>
+                                        <suggestionRows>
+                                            <ColumnListItem>
+                                                <Label
+                                                    text="{supplierInput>Valor}"
+                                                />
+                                                <Label
+                                                    text="{supplierInput>Descripcion}"
+                                                />
+                                            </ColumnListItem>
+                                        </suggestionRows> -->
+
+                                    <!-- <Input
+                                        id="supplierInput"
+                                        placeholder="{i18n>master.filterBar.supplier.placeholder}"
+                                        showSuggestion="true"
+                                        showTableSuggestionValueHelp="false"
+                                        suggestionRows="{path:'prontoPago>/MatchcodesSet', length: 10000, filters:[{ path: 'Campo', operator: 'EQ', value1: 'Proveedor' }]}">
+                                        <suggestionColumns>
+                                            <Column>
+                                                <Label text="Valor" />
+                                            </Column>
+                                            <Column>
+                                                <Label text="Descripción" />
+                                            </Column>
+                                        </suggestionColumns>
+
+                                        <suggestionRows>
+                                            <ColumnListItem>
+                                                <Label text="{path: 'prontoPago>Valor', formatter: '.formatter.formatValorInputValue'}" />
+                                                <Label text="{path: 'prontoPago>Descripcion', formatter: '.formatter.formatDescripcionInputValue'}" />
+                                            </ColumnListItem>
+                                        </suggestionRows>
+                                    </Input> -->
+                                </fb:control>
+                            </fb:FilterItem>
+                        </fb:filterItems>
+                        <fb:filterItems>
+                            <fb:FilterItem
+                                name="W"
+                                visible="{appView>/filterBar/Documento}"
+                                label="{i18n>master.filterBar.document}"
+                                id="itemFilterDocument"
+                                mandatory="true"
+                            >
+                                <fb:control>
+                                    <Input
+                                        id="documentInput"
+                                        placeholder="{i18n>master.filterBar.document.placeholder}"
+                                    />
+                                </fb:control>
+                            </fb:FilterItem>
+                        </fb:filterItems>
+                        <fb:filterItems>
+                            <fb:FilterItem
+                                name="D"
+                                visible="{appView>/filterBar/Moneda}"
+                                label="{i18n>master.filterBar.currency}"
+                                id="itemFilterCurrency"
+                            >
+                                <fb:control>
+                                    <ComboBox
+                                        id="currencyCombo"
+                                        placeholder="{i18n>master.filterBar.currency.placeholder}"
+                                        items="{path:'prontoPago>/MatchcodesSet', length : 1000, filters:[{ path: 'Campo', operator: 'EQ', value1: 'Moneda' }]}"
+                                    >
+                                        <core:ListItem
+                                            key="{prontoPago>Valor}"
+                                            text="{= ${prontoPago>Valor}+' - '+${prontoPago>Descripcion}}"
+                                        />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterItem>
+                        </fb:filterItems>
+                        <fb:filterItems>
+                            <fb:FilterItem
+                                name="C"
+                                visible="{appView>/filterBar/Solicitud}"
+                                label="{i18n>master.filterBar.request}"
+                                id="itemFilterRequest"
+                            >
+                                <fb:control>
+                                    <!-- <ComboBox id="requestCombo" placeholder="{i18n>master.filterBar.request.placeholder}"
+										items="{path:'prontoPago>/MatchcodesSet', filters:[{ path: 'Campo', operator: 'EQ', value1: 'Solicitud' }]}">
+										<core:ListItem key="{prontoPago>Valor}" text="{prontoPago>Descripcion}"/>
+									</ComboBox> -->
+                                    <Input
+                                        id="requestInput"
+                                        placeholder="{i18n>master.filterBar.request.placeholder}"
+                                    />
+                                </fb:control>
+                            </fb:FilterItem>
+                        </fb:filterItems>
+                        <!-- <fb:filterItems>
+							<fb:FilterItem name="E" visible="{appView>/filterBar/Solicitante}" label="{i18n>master.filterBar.applicant}" id="itemFilterApplicant">
+								<fb:control>
+									<ComboBox id="applicantCombo" placeholder="{i18n>master.filterBar.applicant.placeholder}"
+										items="{path:'prontoPago>/MatchcodesSet',  length : 1000, filters:[{ path: 'Campo', operator: 'EQ', value1: 'Solicitante' }]}">
+										<core:ListItem key="{prontoPago>Valor}" text="{prontoPago>Descripcion}"/>
+									</ComboBox>
+								</fb:control>
+							</fb:FilterItem>
+						</fb:filterItems> -->
+                        <fb:filterItems>
+                            <fb:FilterItem
+                                id="itemFilterStatus"
+                                visible="{appView>/filterBar/Estado}"
+                                name="I"
+                                label="{i18n>master.filterBar.status}"
+                            >
+                                <fb:control>
+                                    <ComboBox
+                                        id="statusCombo"
+                                        placeholder="{i18n>master.filterBar.status.placeholder}"
+                                        items="{path:'solicitudes>/estado'}"
+                                    >
+                                        <core:ListItem
+                                            key="{solicitudes>ID_ESTADO}"
+                                            text="{solicitudes>DESCRIPCION}"
+                                        />
+                                    </ComboBox>
+                                </fb:control>
+                            </fb:FilterItem>
+                        </fb:filterItems>
+                        <fb:filterItems>
+                            <fb:FilterItem
+                                id="itemFilterDate"
+                                visible="{appView>/filterBar/Fecha}"
+                                name="Ñ"
+                                label="{i18n>master.filterBar.date}"
+                            >
+                                <fb:control>
+                                    <DateRangeSelection
+                                        id="DRS1"
+                                        delimiter="-"
+                                        dateValue=""
+                                        secondDateValue=""
+                                        displayFormat="dd-MMM-yyyy"
+                                    />
+                                </fb:control>
+                            </fb:FilterItem>
+                        </fb:filterItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <IconTabBar
+                id="iconTabBarSolicitudProntosPagos"
+                select="onPressTabSelecion"
+                class="sapUiResponsiveContentPadding"
+            >
+                <items>
+                    <IconTabFilter
+                        icon="sap-icon://permission"
+                        design="Horizontal"
+                        count=""
+                        text="{i18n>master.tableTitle2}"
+                        key="tabFilerPartidasAbiertas"
+                    >
+                        <Table
+                            id="PartidasAbiertasListTable"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            growingThreshold="10"
+                            width="auto"
+                            enableBusyIndicator="true"
+                        >
+                            <!-- <headerToolbar>
+                                <OverflowToolbar>
+                                    <ToolbarSpacer />
+                                    <Button
+                                        tooltip="Ordenar"
+                                        icon="sap-icon://sort"
+                                        press="handleSortButtonPressed"
+                                    />
+                                </OverflowToolbar>
+                            </headerToolbar> -->
+                            <columns>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.document}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.society}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.supplier}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.POInvoice}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.invoiceReference}"
+                                    />
+                                </Column>
+                                <!-- <Column minScreenWidth="Desktop" demandPopin="true" visible="{= ${appView>/layout} === 'TwoColumnsMidExpanded' ? false : true }">
+									<Text text="{i18n>master.tableColumn.manager}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" visible="{= ${appView>/layout} === 'TwoColumnsMidExpanded' ? false : true }">
+									<Text text="{i18n>master.tableColumn.datePaymentProposal}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" visible="{= ${appView>/layout} === 'TwoColumnsMidExpanded' ? false : true }">
+									<Text text="{i18n>master.tableColumn.POInvoice}"/>
+								</Column>
+								<Column minScreenWidth="Desktop" demandPopin="true" visible="{= ${appView>/layout} === 'TwoColumnsMidExpanded' ? false : true }">
+									<Text text="{i18n>master.tableColumn.dateDocumentInvoice}"/> -->
+                                <!-- </Column> -->
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.dateDocumentInvoice}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.currency}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.invoiceAmount}"
+                                    />
+                                </Column>
+                            </columns>
+                            <dependents>
+                                <ColumnListItem
+                                    id="PATableItemTemplate"
+                                    vAlign="Middle"
+                                    type="Active"
+                                    press="onPressPartidaAbierta"
+                                >
+                                    <cells>
+                                        <Text text="{prontoPago>Zbelnr}" />
+                                        <ObjectIdentifier
+                                            title="{prontoPago>ZbukrsDesc}"
+                                            text="{prontoPago>Zbukrs}"
+                                        />
+                                        <ObjectIdentifier
+                                            title="{prontoPago>ZlifnrDesc}"
+                                            text="{prontoPago>Zlifnr}"
+                                        />
+                                        <Text text="{prontoPago>Zoc}" />
+                                        <Text text="{prontoPago>Zref}" />
+                                        <!-- <Text text="{prontoPago>Zbelnr}"/> -->
+                                        <!-- <Text text="{prontoPago>Zppago}"/> -->
+                                        <Text
+                                            text="{path :'prontoPago>Zfecha', formatter: '.formatter.formatDate'}"
+                                        />
+                                        <Text text="{prontoPago>Zwaers}" />
+                                        <Text
+                                            text="{path :'prontoPago>Zwrbtr', formatter: '.formatter.formatNumber'}"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </dependents>
+                        </Table>
+                    </IconTabFilter>
+                    <IconTabSeparator />
+                    <IconTabFilter
+                        icon="sap-icon://request"
+                        design="Horizontal"
+                        count=""
+                        text="Solicitudes"
+                        key="tabFilerSolicitudes"
+                        id="tabFilterSolicitudesID"
+                    >
+                        <Table
+                            id="SolicitudesListTable"
+                            growing="true"
+                            growingScrollToLoad="true"
+                            growingThreshold="10"
+                            width="auto"
+                            enableBusyIndicator="true"
+                        >
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <ToolbarSpacer />
+                                    <Button
+                                        text="{i18n>master.table.btn.export}"
+                                        type="Emphasized"
+                                        press="onExportExcel"
+                                        icon="sap-icon://expand-all"
+                                    />
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    width="6rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.solicitud}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    width="8rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.society}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    width="12rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.supplier}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    width="7rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.document}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    width="8rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.POInvoice}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    width="7rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.invoiceReference}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    visible="{= ${appView>/layout} === 'TwoColumnsMidExpanded' ? false : true }"
+                                    width="6rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.invoiceAmount}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    visible="{= ${appView>/layout} === 'TwoColumnsMidExpanded' ? false : true }"
+                                    width="4.5rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.currency}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    visible="{= ${appView>/layout} === 'TwoColumnsMidExpanded' ? false : true }"
+                                    width="7rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.dateRequest}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    visible="{= ${appView>/layout} === 'TwoColumnsMidExpanded' ? false : true }"
+                                    width="6rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.datePaymentProposal}"
+                                    />
+                                </Column>
+                                <Column
+                                    minScreenWidth="Desktop"
+                                    demandPopin="true"
+                                    visible="{= ${appView>/layout} === 'TwoColumnsMidExpanded' ? false : true }"
+                                    width="7rem"
+                                >
+                                    <Text
+                                        text="{i18n>master.tableColumn.status}"
+                                    />
+                                </Column>
+                            </columns>
+                            <dependents>
+                                <ColumnListItem
+                                    vAlign="Middle"
+                                    type="Active"
+                                    press="onPressSolicitud"
+                                    id="SolicitudesTableItemTemplate"
+                                >
+                                    <cells>
+                                        <ObjectIdentifier
+                                            title="{solicitudes>ID_SOLICITUD}"
+                                            text="Version: {solicitudes>SOLICITUD_VERSION}"
+                                        />
+                                        <ObjectIdentifier
+                                            title="{solicitudes>SOCIEDAD_DESC}"
+                                            text="{solicitudes>SOCIETY}"
+                                        />
+                                        <ObjectIdentifier
+                                            title="{solicitudes>SUPPLIER_DESC}"
+                                            text="{solicitudes>SUPPLIER}"
+                                        />
+                                        <Text text="{solicitudes>DOCUMENT}" />
+                                        <Text
+                                            text="{solicitudes>ORDEN_COMPRA}"
+                                        />
+                                        <Text text="{solicitudes>REFERENCIA}" />
+                                        <Text
+                                            text="{path :'solicitudes>MONEY', formatter: '.formatter.formatNumber'}"
+                                        />
+                                        <Text text="{solicitudes>MONEDA}" />
+                                        <Text
+                                            text="{path: 'solicitudes>FECHA', formatter: '.formatter.formatDate'}"
+                                        />
+                                        <Text
+                                            text="{path: 'solicitudes>PAYMENT_DATE', formatter: '.formatter.formatDate'}"
+                                        />
+                                        <ObjectStatus
+                                            text="{ path: 'solicitudes>ID_ESTADO', formatter: '.formatter.formatStatus'}"
+                                            state="{ path: 'solicitudes>ID_ESTADO', formatter: '.formatter.statusColor'}"
+                                            icon="sap-icon://circle-task-2"
+                                        />
+                                    </cells>
+                                </ColumnListItem>
+                            </dependents>
+                        </Table>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </f:content>
+        <f:footer />
+    </f:DynamicPage>
+</mvc:View>

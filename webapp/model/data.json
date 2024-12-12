@@ -1,0 +1,127 @@
+{
+    "adelantos": [
+        {
+            "sociedad": "Molinos Agro",
+            "nroProveedor": "15482584255",
+            "subNegocio": "Negocio 1",
+            "gerente": "Juan Cabral",
+            "fechaPP": "2024-03-02",
+            "ordenDeCompra": "7",
+            "fechaDocumento": "06/03/2024",
+            "fechaVencimiento": "31/03/2024",
+            "estado": "pendiente",
+            "liberadorActual": "Cristian@Rodriguez",
+            "importeFT": "12500.50",
+            "moneda": "USD",
+            "nroReferencia": "1111111111",
+            "folioBTP": "folio",
+            "observaciones": "Ingrese texto..."
+        }
+    ],
+    "datosAdjuntosAdelantos": [
+        {
+            "creador": "Guillermo Gonzalez",
+            "creacion": "06/03/2024",
+            "vencimiento": "31/03/2024",
+            "documento": "31/03/2024",
+            "estado": "pendiente"
+        },
+        {
+            "creador": "Jawahar Lal Nehru",
+            "creacion": "06/03/2024",
+            "vencimiento": "31/03/2024",
+            "documento": "31/03/2024",
+            "estado": "aprobado"
+        }
+    ],
+    "detalleAdelantos": [
+        {
+            "creador": "Jawahar Lal Nehru",
+            "cuentaBanco": "519841618641518611865",
+            "numeroCuentaBanco": "1111111111111111111111",
+            "pais": "India"
+        }
+    ],
+    "nodes": [
+        {
+            "id": "1",
+            "lane": "0",
+            "title": "Nivel 1",
+            "titleAbbreviation": "Aprobado",
+            "children": [
+                2
+            ],
+            "state": "Positive",
+            "stateText": "cristian@gmail.com",
+            "focused": true,
+            "texts": null
+        },
+        {
+            "id": "2",
+            "lane": "1",
+            "title": "Nivel 2",
+            "titleAbbreviation": "Observado",
+            "children": [
+                3
+            ],
+            "state": "Critical",
+            "stateText": "luis@gmail.com",
+            "focused": false,
+            "texts": [
+                "Se solicita seguro de vida del empleado"
+            ]
+        },
+        {
+            "id": "3",
+            "lane": "2",
+            "title": "Nivel 3",
+            "titleAbbreviation": "Aprobado",
+            "children": [
+                4
+            ],
+            "state": "Positive",
+            "stateText": "fernando@gmail.com",
+            "focused": false,
+            "texts": null
+        },
+        {
+            "id": "4",
+            "lane": "3",
+            "title": "Nivel 4",
+            "titleAbbreviation": "Rechazado",
+            "children": [],
+            "state": "Negative",
+            "stateText": "nicolas@gmail.com",
+            "focused": false,
+            "texts": [
+                "Se encontraron irregularidades"
+            ]
+        }
+    ],
+    "lanes": [
+        {
+            "id": "0",
+            "icon": "sap-icon://order-status",
+            "label": "Aprobado",
+            "position": 0
+        },
+        {
+            "id": "1",
+            "icon": "sap-icon://payment-approval",
+            "label": "Observado",
+            "position": 1
+        },
+        {
+            "id": "2",
+            "icon": "sap-icon://order-status",
+            "label": "Aprobado",
+            "position": 2
+        },
+        {
+            "id": "3",
+            "icon": "sap-icon://order-status",
+            "label": "Rechazado",
+            "position": 3
+        }
+    ]
+}

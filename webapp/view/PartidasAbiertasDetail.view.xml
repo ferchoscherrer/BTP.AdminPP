@@ -1,0 +1,196 @@
+<mvc:View
+    controllerName="cotemar.solicitudprontospagos.controller.PartidasAbiertasDetail"
+    xmlns="sap.uxap"
+    xmlns:layout="sap.ui.layout"
+    xmlns:m="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+    xmlns:cms="sap.suite.ui.commons"
+>
+    <ObjectPageLayout
+        id="PartidasAbiertasLayoutId"
+        showTitleInHeaderContent="true"
+        alwaysShowContentHeader="true"
+        preserveHeaderStateOnScroll="true"
+        headerContentPinnable="true"
+        upperCaseAnchorBar="false"
+        showFooter="{appView>/showFooter}"
+    >
+        <headerTitle>
+            <ObjectPageDynamicHeaderTitle>
+                <expandedHeading>
+                    <m:Title
+                        text="{= ${i18n>detail.title}+' ('+${partidaAbiertaDetail>/Zbelnr}+')'}"
+                        wrapping="true"
+                    />
+                </expandedHeading>
+                <actions>
+                    <m:OverflowToolbarButton
+                        icon="sap-icon://decline"
+                        type="Emphasized"
+                        tooltip="{i18n>RequirementDetail.buttonClose}"
+                        press="onClosePartidasAbiertasDetailPress"
+                    />
+                </actions>
+            </ObjectPageDynamicHeaderTitle>
+        </headerTitle>
+        <sections>
+            <ObjectPageSection>
+                <subSections>
+                    <ObjectPageSubSection>
+                        <form:SimpleForm
+                            title="{i18n>detail.form.title}"
+                            editable="true"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="4"
+                            labelSpanL="3"
+                            labelSpanM="4"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="4"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="1"
+                            columnsM="1"
+                            singleContainerFullSize="false"
+                        >
+                            <m:Label
+                                text="{i18n>master.tableColumn.document}"
+                            />
+                            <m:Input
+                                editable="false"
+                                value="{partidaAbiertaDetail>/Zbelnr}"
+                            />
+                            <m:Label text="{i18n>master.tableColumn.society}" />
+                            <m:Input
+                                editable="false"
+                                value="{= ${partidaAbiertaDetail>/Zbukrs}+' - '+${partidaAbiertaDetail>/ZbukrsDesc}}"
+                            />
+                            <m:Label
+                                text="{i18n>master.tableColumn.supplier}"
+                            />
+                            <m:Input
+                                editable="false"
+                                value="{partidaAbiertaDetail>/ZlifnrDesc}"
+                            />
+                            <m:Label
+                                text="{i18n>master.tableColumn.subOfBusiness}"
+                            />
+                            <m:Input
+                                editable="false"
+                                value="{partidaAbiertaDetail>/Zkostl}"
+                            />
+                            <!-- <m:Label text="{i18n>master.tableColumn.manager}"/>
+							<m:Input editable="false" value="{partidaAbiertaDetail>/gerente}"/> -->
+                            <m:Label
+                                text="{i18n>master.tableColumn.POInvoice}"
+                            />
+                            <m:Input
+                                editable="false"
+                                value="{partidaAbiertaDetail>/Zoc}"
+                            />
+                            <m:Label
+                                text="{i18n>master.tableColumn.dateDocumentInvoice}"
+                            />
+                            <m:Input
+                                editable="false"
+                                value="{path: 'partidaAbiertaDetail>/Zfecha', formatter: '.formatter.formatDate'}"
+                            />
+                            <m:Label
+                                text="{i18n>master.tableColumn.expirationDate}"
+                            />
+                            <m:Input
+                                editable="false"
+                                value="{path: 'partidaAbiertaDetail>/Zvenc', formatter: '.formatter.formatDate'}"
+                            />
+                            <m:Label
+                                text="{i18n>master.tableColumn.currency}"
+                            />
+                            <m:Input
+                                editable="false"
+                                value="{partidaAbiertaDetail>/ZwaersDesc}"
+                            />
+                            <m:Label
+                                text="{i18n>master.tableColumn.invoiceReference}"
+                            />
+                            <m:Input
+                                editable="false"
+                                value="{partidaAbiertaDetail>/Zref}"
+                            />
+                        </form:SimpleForm>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+            <ObjectPageSection>
+                <subSections>
+                    <ObjectPageSubSection>
+                        <form:SimpleForm
+                            title="{i18n>detail.form.titleProntoPago}"
+                            editable="true"
+                            layout="ResponsiveGridLayout"
+                            labelSpanXL="4"
+                            labelSpanL="3"
+                            labelSpanM="4"
+                            labelSpanS="12"
+                            adjustLabelSpan="false"
+                            emptySpanXL="0"
+                            emptySpanL="4"
+                            emptySpanM="0"
+                            emptySpanS="0"
+                            columnsXL="2"
+                            columnsL="1"
+                            columnsM="1"
+                            singleContainerFullSize="false"
+                        >
+                            <m:Label
+                                text="{i18n>master.tableColumn.datePaymentProposal}" required="true"
+                            />
+                            <m:DatePicker
+                                id="DPPartidasAbiertas"
+                                value="{path: 'partidaAbiertaDetail>/Zppago', formatter: '.formatter.formatDate'}"
+                                valueFormat="yyyy-MM-dd"
+                            />
+                            <m:Label text="{i18n>master.tableColumn.remarks}" required="true" />
+                            <m:Input
+                                id="IObservacionesPartidasAbiertas"
+                                editable="true"
+                                value="{partidaAbiertaDetail>/Zmsj}"
+                            />
+                            <m:Label
+                                text="{i18n>master.tableColumn.invoiceAmount}"
+                            />
+                            <m:Input
+                                editable="false"
+                                value="{path :'partidaAbiertaDetail>/Zwrbtr', formatter: '.formatter.formatNumber'}"
+                            />
+                            <!-- 
+
+                    Zbuzei: oPartidaAbierta.Zbuzei,
+                    Zwaers: oPartidaAbierta.Zwaers,
+                    ZwaersDesc: oPartidaAbierta.ZwaersDesc,
+                    Zwrbtr: oPartidaAbierta.Zwrbtr,
+                    Zdmbtr: oPartidaAbierta.Zdmbtr,
+                    Zfecha: oPartidaAbierta.Zfecha,
+                    Zoc: oPartidaAbierta.Zoc,
+                    Zppago: oPartidaAbierta.Zppago,
+                    Zvenc: oPartidaAbierta.Zvenc -->
+                        </form:SimpleForm>
+                    </ObjectPageSubSection>
+                </subSections>
+            </ObjectPageSection>
+        </sections>
+        <footer>
+            <m:OverflowToolbar>
+                <m:ToolbarSpacer />
+                <m:Button
+                    type="Accept"
+                    text="{i18n>detail.btn.send}"
+                    press="onPressApprove"
+                />
+            </m:OverflowToolbar>
+        </footer>
+    </ObjectPageLayout>
+</mvc:View>

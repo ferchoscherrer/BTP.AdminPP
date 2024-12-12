@@ -1,0 +1,230 @@
+{
+  "_version": "1.59.0",
+  "sap.app": {
+    "id": "cotemar.solicitudprontospagos",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.12.5",
+      "toolsId": "332cd22d-dada-457f-a5e1-d02062c2e71e"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "solicitudprontospagos-display": {
+          "semanticObject": "solicitudprontospagos",
+          "action": "display",
+          "title": "{{flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    },
+    "dataSources": {
+      "prontoPago": {
+        "uri": "/ZFI_PRONTO_PAGO_SRV/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0",
+          "localUri": "localService/metadata.xml"
+        }
+      },
+      "solicitudes": {
+        "uri": "/solicitud.xsodata/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      },
+      "userApi": {
+        "uri": "user-api/currentUser"
+      },
+      "userApi2": {
+        "uri": "user-api/attributes"
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.123.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.suite.ui.generic.template": {},
+        "sap.ui.comp": {},
+        "sap.ui.generic.app": {},
+        "sap.ui.table": {},
+        "sap.ushell": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "cotemar.solicitudprontospagos.i18n.i18n"
+        }
+      },
+      "solicitudDetail": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "partidaAbiertaDetail": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "solicitudMaster": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "appView": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "prontoPago": {
+        "dataSource": "prontoPago",
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "settings": {
+          "defaultOperationMode": "Server",
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "preload": true
+        }
+      },
+      "solicitudes": {
+        "dataSource": "solicitudes",
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "settings": {
+          "defaultOperationMode": "Server",
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "preload": true
+        }
+      },
+      "userData": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "userData2": {
+        "dataSource": "userApi2",
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "Inline",
+          "preload": true,
+          "refreshAfterChange": false
+        }
+      },
+      "approversGraph": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "supplierInput": {
+        "type": "sap.ui.model.json.JSONModel"
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "async": true,
+        "viewPath": "cotemar.solicitudprontospagos.view",
+        "controlAggregation": "beginColumnPages",
+        "controlId": "layout",
+        "clearControlAggregation": false
+      },
+      "routes": [
+        {
+          "name": "SolicitudMaster",
+          "pattern": "",
+          "target": [
+            "SolicitudMaster"
+          ]
+        },
+        {
+          "name": "SolicitudDetail",
+          "pattern": "SolicitudDetail/{idSolicitud}/{idSolicitudVersion}",
+          "target": [
+            "SolicitudMaster",
+            "SolicitudDetail"
+          ]
+        },
+        {
+          "name": "PartidasAbiertasDetail",
+          "pattern": "PartidasAbiertasDetail/{Zmandt},{Zgjahr},{Zspras},{Zbukrs},{Zbelnr},{Zbuzei}",
+          "target": [
+            "SolicitudMaster",
+            "PartidasAbiertasDetail"
+          ]
+        }
+      ],
+      "targets": {
+        "SolicitudMaster": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "solicitudMaster",
+          "viewName": "SolicitudMaster"
+        },
+        "SolicitudDetail": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": true,
+          "controlAggregation": "midColumnPages",
+          "viewId": "solicitudDetail",
+          "viewName": "SolicitudDetail"
+        },
+        "PartidasAbiertasDetail": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": true,
+          "controlAggregation": "midColumnPages",
+          "viewId": "partidasAbiertasDetail",
+          "viewName": "PartidasAbiertasDetail"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "cotemar.solicitudprontospagos.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "App"
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "cotemarsolicitudprontospagos"
+  }
+}
