@@ -146,9 +146,12 @@
                                 value="{solicitudDetail>/REFERENCIA}"
                             />
                             <m:Label text="{i18n>master.tableColumn.remarks}" required="true" />
-                            <m:Input
+                            <m:TextArea
                                 editable="false"
                                 value="{solicitudDetail>/REASON}"
+                                growing="true"
+                                growingMaxLines="7"
+                                width="100%"
                             />
                         </form:SimpleForm>
                     </ObjectPageSubSection>
