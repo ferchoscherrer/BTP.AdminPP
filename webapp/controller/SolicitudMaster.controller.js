@@ -48,7 +48,8 @@ sap.ui.define(
           $.ajax(settings).done(function (response) {
             this.getOwnerComponent().getModel("userData").setData(response);
             this.loadSolicitudes()
-            this.getOwnerComponent().getModel("userData").setProperty("/area", response.PostalCode[0])
+            let postalcode = response.PostalCode ? response.PostalCode[0] : response.postalcode[0];
+            this.getOwnerComponent().getModel("userData").setProperty("/area", postalcode)
            // this.getUserArea(response.email)
           }.bind(this)).fail(function (error) {
             MessageBox.error("Ha ocurrido un error al obtener los datos del usuario")
