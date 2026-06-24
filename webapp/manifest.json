@@ -1,7 +1,7 @@
 {
   "_version": "1.59.0",
   "sap.app": {
-    "id": "cotemar.solicitudprontospagos",
+    "id": "cotemar.adminprontospagos",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -17,8 +17,8 @@
     },
     "crossNavigation": {
       "inbounds": {
-        "solicitudprontospagos-display": {
-          "semanticObject": "solicitudprontospagos",
+        "adminprontospagos-display": {
+          "semanticObject": "adminprontospagos",
           "action": "display",
           "title": "{{flpTitle}}",
           "signature": {
@@ -93,7 +93,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "cotemar.solicitudprontospagos.i18n.i18n"
+          "bundleName": "cotemar.adminprontospagos.i18n.i18n"
         }
       },
       "solicitudDetail": {
@@ -160,24 +160,24 @@
         "routerClass": "sap.m.routing.Router",
         "viewType": "XML",
         "async": true,
-        "viewPath": "cotemar.solicitudprontospagos.view",
+        "viewPath": "cotemar.adminprontospagos.view",
         "controlAggregation": "beginColumnPages",
         "controlId": "layout",
         "clearControlAggregation": false
       },
       "routes": [
         {
-          "name": "SolicitudMaster",
+          "name": "AdminMaster",
           "pattern": "",
           "target": [
-            "SolicitudMaster"
+            "AdminMaster"
           ]
         },
         {
           "name": "SolicitudDetail",
           "pattern": "SolicitudDetail/{idSolicitud}/{idSolicitudVersion}",
           "target": [
-            "SolicitudMaster",
+            "AdminMaster",
             "SolicitudDetail"
           ]
         },
@@ -185,18 +185,18 @@
           "name": "PartidasAbiertasDetail",
           "pattern": "PartidasAbiertasDetail/{Zmandt},{Zgjahr},{Zspras},{Zbukrs},{Zbelnr},{Zbuzei}",
           "target": [
-            "SolicitudMaster",
+            "AdminMaster",
             "PartidasAbiertasDetail"
           ]
         }
       ],
       "targets": {
-        "SolicitudMaster": {
+        "AdminMaster": {
           "viewType": "XML",
           "transition": "slide",
           "clearControlAggregation": false,
-          "viewId": "solicitudMaster",
-          "viewName": "SolicitudMaster"
+          "viewId": "adminMaster",
+          "viewName": "AdminMaster"
         },
         "SolicitudDetail": {
           "viewType": "XML",
@@ -217,7 +217,7 @@
       }
     },
     "rootView": {
-      "viewName": "cotemar.solicitudprontospagos.view.App",
+      "viewName": "cotemar.adminprontospagos.view.App",
       "type": "XML",
       "async": true,
       "id": "App"
@@ -225,6 +225,6 @@
   },
   "sap.cloud": {
     "public": true,
-    "service": "cotemarsolicitudprontospagos"
+    "service": "cotemaradminprontospagos"
   }
 }

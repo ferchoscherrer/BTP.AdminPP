@@ -1,0 +1,13 @@
+<mvc:View controllerName="cotemar.adminprontospagos.controller.AdminMaster" 
+    xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:table="sap.ui.table">
+    <Page title="Dashboard de Administración">
+        <table:Table id="adminTable" rows="{/}" selectionMode="None" visibleRowCount="10">
+            <table:columns>
+                <table:Column><Label text="ID Solicitud" /><table:template><Text text="{ID_SOLICITUD}" /></table:template></table:Column>
+                <table:Column><Label text="Usuario" /><table:template><Text text="{USUARIO}" /></table:template></table:Column>
+                <table:Column><Label text="Fecha" /><table:template><Text text="{path: 'FECHA', formatter: '.formatter.formatDate'}" /></table:template></table:Column>
+                <table:Column><Label text="Estado" /><table:template><ObjectStatus text="{path: 'ID_ESTADO', formatter: '.formatter.formatStatus'}" /></table:template></table:Column>
+            </table:columns>
+        </table:Table>
+    </Page>
+</mvc:View>
